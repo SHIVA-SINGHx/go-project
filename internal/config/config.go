@@ -4,19 +4,22 @@ import (
 	"flag"
 	"log"
 	"os"
+
+	"github.com/ilyakaznacheev/cleanenv"
+	
 )
 
 type HTTPServer struct {
 	Addr string
 }
 
-type config struct {
+type Config struct {
 	Env         string `yaml:"env" env:"ENV" env-required:"true"`
 	StoragePath string `yaml:"storage_path" env-required:"true"`
 	HTTPServer  `yaml:"http_server"`
 }
 
-func MustLoad() {
+func MustLoad() *Config {
 
 	var configPath string
 
@@ -33,8 +36,19 @@ func MustLoad() {
 		}
 	}
 
-	if _, err := os.Stat()
-	
+	if _, err := os.Stat(configPath); os.IsNotExist(err){
+
+		log.Fatalf("config file does not exist: %s", configPath)
+	}
+
+	var cnf Config
+
+	err:= cleanenv.ReadConfig(configPath, &cnf)
+	if err != nil {
+		log.Fatalf("can not read config file: %s", err.Error())
+	}
+
+	return &cnf
 
 
 

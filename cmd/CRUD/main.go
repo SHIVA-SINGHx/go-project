@@ -27,12 +27,12 @@ func main() {
 			http.NotFound(w, r)
 			return
 		}
-		w.Write([]byte("🚀 Welcome to my Go CRUD Project"))
+		w.Write([]byte("🚀 Welcome To My Go CRUD Project"))
 	})
 
 	// Routes
-	mux.HandleFunc("/api/student", handlers.CreateStudent())               // POST
-	mux.HandleFunc("/api/student/", handlers.StudentHandlerWithID()) // GET, PUT, DELETE
+	mux.HandleFunc("/api/student", handlers.CreateStudent())               // POST METHOOD
+	mux.HandleFunc("/api/student/", handlers.StudentHandlerWithID()) // GET, PUT, DELETE METHOOD
 
 	// Server setup
 	server := http.Server{
@@ -53,7 +53,7 @@ func main() {
 	}()
 
 	<-done
-	slog.Info("Shutting down server")
+	slog.Info("Shutting Down The Server")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
